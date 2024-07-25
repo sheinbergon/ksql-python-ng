@@ -63,7 +63,7 @@ class BaseAPI(object):
     def ksql(self, ksql_string, stream_properties=None):
         response = self._http1_request(
             endpoint="ksql",
-            sql_string=ksql_string,
+            sql_string=ksql_string.strip(),
             stream_properties=stream_properties,
         )
         text = response.read().decode("utf-8")
