@@ -28,13 +28,15 @@ setuptools_kwargs = {
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name="ksql",
+    name="ksql-python-ng",
     version=VERSION,
     description="A Python wrapper for the KSQL REST API",
     long_description=README,
     author="Bryan Yang",
     author_email="kenshin200528@gmail.com",
-    url="https://github.com/bryanyang0528/ksql-python",
+    maintainer="Idan Sheinberg",
+    maintainer_email="ishinberg0@gmail.com",
+    url="https://github.com/sheinbergon/ksql-python-ng",
     license="MIT License",
     packages=["ksql"],
     include_package_data=True,

@@ -1,40 +1,36 @@
-ksql-python
-===========
+ksqldb-python-ng
+================
+
+Forked and modernized from Bryan Yang's awsome `ksql-python <https://github.com/bryanyang0528/ksql-python>`_
 
 A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API using this library.
 
-Supported KSQLDB version: 0.10.1+
-Supported Python version: 3.5+
+Supported KSQLDB version: 0.29.0+
+Supported Python version: 3.9+
 
-.. image:: https://travis-ci.org/bryanyang0528/ksql-python.svg?branch=master
+..
+  image:: https://travis-ci.org/bryanyang0528/ksql-python.svg?branch=master
   :target: https://travis-ci.org/bryanyang0528/ksql-python
-
-.. image:: https://codecov.io/gh/bryanyang0528/ksql-python/branch/master/graph/badge.svg
+..
+  image:: https://codecov.io/gh/bryanyang0528/ksql-python/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/bryanyang0528/ksql-python
+..
+   image:: https://pepy.tech/badge/ksql
+   :target: https://pepy.tech/project/ksql
+..
+   image:: https://pepy.tech/badge/ksql/month
+   :target: https://pepy.tech/project/ksql/month
 
-.. image:: https://pepy.tech/badge/ksql
-  :target: https://pepy.tech/project/ksql
-
-.. image:: https://pepy.tech/badge/ksql/month
-  :target: https://pepy.tech/project/ksql/month
-  
 .. image:: https://img.shields.io/badge/license-MIT-yellow.svg
   :target: https://github.com/bryanyang0528/ksql-python/blob/master/LICENSE  
   
 Installation
 ------------
+(PyPI coming soon)
 
 .. code:: bash
 
-    pip install ksql
-
-Or
-
-.. code:: bash
-
-    git clone https://github.com/bryanyang0528/ksql-python
-    cd ksql-python
-    python setup.py install
+    pip install git+https://github.com/sheinbergon/ksql-python-ng.git
 
 Getting Started
 ---------------
@@ -128,10 +124,10 @@ This command returns a generator. It can be printed e.g. by reading its values v
 
    ::
 
-       {"row":{"columns":[1512787743388,"key1",1,2,3]},"errorMessage":null}
-       {"row":{"columns":[1512787753200,"key1",1,2,3]},"errorMessage":null}
-       {"row":{"columns":[1512787753488,"key1",1,2,3]},"errorMessage":null}
-       {"row":{"columns":[1512787753888,"key1",1,2,3]},"errorMessage":null}
+       {"queryId":"44d8413c-0018-423d-b58f-3f2064b9a312","columnNames":["ORDER_ID","TOTAL_AMOUNT","CUSTOMER_NAME"],"columnTypes":["INTEGER","DOUBLE","STRING"]}
+       [3,43.0,"Palo Alto"]
+       [3,43.0,"Palo Alto"]
+       [3,43.0,"Palo Alto"]
 
 Query with HTTP/2
 ^^^^^^^^^^^^^^^^^
@@ -318,4 +314,4 @@ There are more properties (partitions, replicas, etc...) in the official documen
   return True
 
 :If failed:
-  raise a CreatError(respose_from_ksql_server)
+  raise a CreateError(respose_from_ksql_server)
