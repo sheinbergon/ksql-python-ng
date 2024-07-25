@@ -1,7 +1,7 @@
 ksql-python-ng
 ================
 
-*Forked from Bryan Yang's awsome `ksql-python <https://github.com/bryanyang0528/ksql-python>`_, brushed up and modernized*
+Forked from Bryan Yang's awsome `ksql-python <https://github.com/bryanyang0528/ksql-python>`_, brushed up, and modernized
 
 A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API using this library.
 
@@ -15,6 +15,7 @@ A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API u
 - Asyncify the entire codebase
 - Publish PyPI artifact
 - Support newer python versions
+- Support newer KSQLDB versions
 - More Cleanup & Refactoring
 - Benchmarks
 
