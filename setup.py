@@ -20,7 +20,7 @@ here = os.path.dirname(__file__)
 README = open(os.path.join(os.path.dirname(__file__), "README.rst")).read()
 
 setuptools_kwargs = {
-    "install_requires": ["requests", "six", "httpx"],
+    "install_requires": ["requests", "six", "httpx[http2]"],
     "zip_safe": False,
 }
 
