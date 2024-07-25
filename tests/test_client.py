@@ -101,7 +101,7 @@ class TestKSQLAPI(unittest.TestCase):
         producer.flush()
 
         # test legacy HTTP/1.1 request
-        chunks = self.api_client.stream(
+        chunks = self.api_client.query(
             f"SELECT * FROM {stream_name} EMIT CHANGES;",
             stream_properties=stream_properties,
         )
@@ -117,7 +117,7 @@ class TestKSQLAPI(unittest.TestCase):
 
         # test new HTTP/2 request
 
-        chunks = self.api_client.stream(
+        chunks = self.api_client.query(
             f"select * from {stream_name} EMIT CHANGES;",
             stream_properties=stream_properties,
             use_http2=True,
@@ -191,7 +191,7 @@ class TestKSQLAPI(unittest.TestCase):
             r = self.api_client.ksql(ksql_string, stream_properties=stream_properties)
             self.assertEqual(r[0]["commandStatus"]["status"], "SUCCESS")
 
-        chunks = self.api_client.stream(
+        chunks = self.api_client.query(
             "select * from {} EMIT CHANGES".format(stream_name),
             stream_properties=stream_properties,
             parse=True,
@@ -243,7 +243,7 @@ class TestKSQLAPI(unittest.TestCase):
             r = self.api_client.ksql(ksql_string, stream_properties=stream_properties)
             self.assertEqual(r[0]["commandStatus"]["status"], "SUCCESS")
 
-        chunks = self.api_client.stream(
+        chunks = self.api_client.query(
             f"select * from {stream_name} EMIT CHANGES LIMIT 1", stream_properties=stream_properties, parse=True
         )
 

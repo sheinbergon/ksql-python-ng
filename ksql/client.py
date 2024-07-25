@@ -45,12 +45,12 @@ class KSQLAPI(object):
     def ksql(self, ksql_string, stream_properties=None):
         return self.sa.ksql(ksql_string, stream_properties=stream_properties)
 
-    def stream(self, query_string, encoding="utf-8", stream_properties=None, use_http2=None, parse=False):
-        results = self._stream(query_string, encoding, stream_properties, use_http2)
+    def query(self, query_string, encoding="utf-8", stream_properties=None, use_http2=None, parse=False):
+        results = self._query(query_string, encoding, stream_properties, use_http2)
         results = parse_query_results(results) if parse else results
         yield from results
 
-    def _stream(
+    def _query(
         self,
         query_string,
         encoding="utf-8",
