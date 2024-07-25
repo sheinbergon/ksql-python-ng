@@ -2,13 +2,13 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 from ksql.api import SimplifiedAPI
-from ksql.utils import process_query_result
+from ksql.utils import parse_query_results
 
 
 class KSQLAPI(object):
-    """ API Class """
+    """API Class"""
 
-    def __init__(self, url, max_retries=3, check_version=True, ** kwargs):
+    def __init__(self, url, max_retries=3, check_version=True, **kwargs):
         """
         You can use a Basic Authentication with this API, for now we accept the api_key/secret based on the Confluent
         Cloud implementation. So you just need to put on the kwargs the api_key and secret.
@@ -45,25 +45,30 @@ class KSQLAPI(object):
     def ksql(self, ksql_string, stream_properties=None):
         return self.sa.ksql(ksql_string, stream_properties=stream_properties)
 
-    def query(self, query_string, encoding="utf-8", chunk_size=128, stream_properties=None, idle_timeout=None, use_http2=None, return_objects=None):
+    def stream(self, query_string, encoding="utf-8", stream_properties=None, use_http2=None, parse=False):
+        results = self._stream(query_string, encoding, stream_properties, use_http2)
+        results = parse_query_results(results) if parse else results
+        yield from results
+
+    def _stream(
+        self,
+        query_string,
+        encoding="utf-8",
+        stream_properties=None,
+        use_http2=None,
+    ):
         if use_http2:
-            yield from self.sa.query2(
+            yield from self.sa.http2_stream(
                 query_string=query_string,
                 encoding=encoding,
-                chunk_size=chunk_size,
                 stream_properties=stream_properties,
-                idle_timeout=idle_timeout,
             )
         else:
-            results = self.sa.query(
+            yield from self.sa.http1_stream(
                 query_string=query_string,
                 encoding=encoding,
-                chunk_size=chunk_size,
                 stream_properties=stream_properties,
-                idle_timeout=idle_timeout
             )
-
-            yield from process_query_result(results, return_objects)
 
     def close_query(self, query_id):
         return self.sa.close_query(query_id)
@@ -90,7 +95,7 @@ class KSQLAPI(object):
         value_format="JSON",
         conditions=[],
         partition_by=None,
-        **kwargs
+        **kwargs,
     ):
 
         return self.sa.create_stream_as(

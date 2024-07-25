@@ -1,7 +1,7 @@
 version: "3"
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.5.0
+    image: confluentinc/cp-zookeeper:7.6.2
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -17,21 +17,23 @@ services:
       start_period: 20s
 
   broker:
-    image: confluentinc/cp-enterprise-kafka:5.5.0
+    image: confluentinc/cp-kafka:7.6.2
     hostname: broker
     container_name: broker
     depends_on:
       zookeeper:
         condition: service_healthy
     ports:
+      - "9092:9092"
       - "29092:29092"
+      - "19092:19092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 3333
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     healthcheck:
@@ -39,10 +41,10 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-      start_period: 20s   
+      start_period: 20s
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.5.0
+    image: confluentinc/cp-schema-registry:7.6.2
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
@@ -55,6 +57,7 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:9092'
     healthcheck:
       test: curl --output /dev/null --silent --head --fail http://schema-registry:8081/subjects
       interval: 30s
@@ -62,7 +65,7 @@ services:
       retries: 3
 
   ksqldb-server:
-    image: confluentinc/ksqldb-server:0.10.1
+    image: confluentinc/ksqldb-server:0.29.0
     hostname: ksqldb-server
     container_name: ksqldb-server
     depends_on:
@@ -102,7 +105,7 @@ services:
       start_period: 20s
 
   ksqldb-cli:
-    image: confluentinc/ksqldb-cli:0.10.1
+    image: confluentinc/ksqldb-cli:0.29.0
     container_name: ksqldb-cli
     depends_on:
       - broker

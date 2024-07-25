@@ -4,24 +4,15 @@
 import os
 
 from setuptools import setup
-from distutils.version import LooseVersion
-import pip
 
-if LooseVersion(pip.__version__) >= "10.0.0":
-    from pip._internal.req import parse_requirements
-else:
-    from pip.req import parse_requirements
 
 def get_install_requirements(path):
     content = open(os.path.join(os.path.dirname(__file__), path)).read()
-    return [
-        req
-        for req in content.split("\n")
-        if req != '' and not req.startswith('#')
-    ]
+    return [req for req in content.split("\n") if req != "" and not req.startswith("#")]
+
 
 # Get version from __init__.py file
-VERSION = "0.10.2"
+VERSION = "0.29.1"
 
 here = os.path.dirname(__file__)
 
@@ -29,13 +20,8 @@ here = os.path.dirname(__file__)
 README = open(os.path.join(os.path.dirname(__file__), "README.rst")).read()
 
 setuptools_kwargs = {
-    'install_requires': [
-	    'requests',
-		'six',
-		'urllib3',
-        'hyper'
-    ],
-    'zip_safe': False,
+    "install_requires": ["requests", "six", "httpx"],
+    "zip_safe": False,
 }
 
 # allow setup.py to be run from any path
@@ -50,25 +36,20 @@ setup(
     author_email="kenshin200528@gmail.com",
     url="https://github.com/bryanyang0528/ksql-python",
     license="MIT License",
-    packages=[
-        "ksql"
-    ],
+    packages=["ksql"],
     include_package_data=True,
-    platforms=['any'],
-    extras_require={
-        "dev": get_install_requirements("test-requirements.txt")
-    },
+    platforms=["any"],
+    extras_require={"dev": get_install_requirements("requirements_test.txt")},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
-        "Topic :: Software Development :: Libraries :: Python Modules"
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    **setuptools_kwargs
+    **setuptools_kwargs,
 )

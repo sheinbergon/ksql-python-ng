@@ -37,7 +37,6 @@ class InvalidQueryError(Exception):
 
 
 class KSQLError(Exception):
-    def __init__(self, e, error_code=None, stackTrace=None):
+    def __init__(self, e, error_code=None):
         self.msg = "{}".format(e)
         self.error_code = error_code
-        self.stackTrace = stackTrace

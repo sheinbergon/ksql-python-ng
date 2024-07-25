@@ -48,6 +48,7 @@ class BaseCreateBuilder(object):
         self.value_formats = ["delimited", "json", "avro"]
         self.table_type = table_type
         self.sql_format = sql_format
+        self.properties = ()
 
         if table_type.lower() not in self.table_types:
             raise IllegalTableTypeError(table_type)
@@ -55,7 +56,7 @@ class BaseCreateBuilder(object):
         if not sql_format:
             raise SQLFormatNotImplementError()
 
-    def build(self):
+    def build(self, **kwargs):
         raise BuildNotImplmentError()
 
     def _parsed_with_properties(self, **kwargs):
@@ -79,18 +80,18 @@ class CreateBuilder(BaseCreateBuilder):
         super(CreateBuilder, self).__init__(table_type, str_format)
         self.properties = ["kafka_topic", "value_format", "key", "timestamp"]
 
-    def build(self, table_name, columns_type=[], topic=None, value_format="JSON", key=None):
+    def build(self, table_name, columns_type=(), topic=None, value_format="JSON", key=None):
         if value_format.lower() not in self.value_formats:
             raise IllegalValueFormatError(value_format)
 
-        built_colums_type = self._build_colums_type(columns_type)
+        built_colums_type = self._build_columns_type(columns_type)
         built_key = self._build_key(key)
 
         sql_str = self.sql_format.format(self.table_type, table_name, built_colums_type, topic, value_format, built_key)
         return sql_str
 
     @staticmethod
-    def _build_colums_type(columns_type):
+    def _build_columns_type(columns_type):
         built_columns_type = ", ".join(columns_type)
         return built_columns_type
 
@@ -116,9 +117,9 @@ class CreateAsBuilder(BaseCreateBuilder):
         src_table,
         kafka_topic=None,
         value_format="JSON",
-        conditions=[],
+        conditions=(),
         partition_by=None,
-        **kwargs
+        **kwargs,
     ):
 
         if value_format.lower() not in self.value_formats:

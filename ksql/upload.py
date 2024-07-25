@@ -1,14 +1,14 @@
 import os
 
 from ksql.client import KSQLAPI
-from ksql.errors import FileTypeError, InvalidQueryError
+from ksql.errors import FileTypeError
 
 
 class FileUpload(object):
-    """ UPLOAD KSQL RULES AS FILES """
+    """UPLOAD KSQL RULES AS FILES"""
 
     def __init__(self, url, **kwargs):
-        """ Instantiate the url pointer and the client object """
+        """Instantiate the url pointer and the client object"""
         self.url = url
         self.client = KSQLAPI(url, **kwargs)
 
@@ -24,7 +24,7 @@ class FileUpload(object):
         """
 
         # check if the file is .ksql
-        self.checkExtension(ksqlfile)
+        self.check_extension(ksqlfile)
 
         # parse the file and get back the rules
         rules = self.get_rules_list(ksqlfile)
@@ -46,7 +46,7 @@ class FileUpload(object):
                     yield rule
                     rule = ""
 
-    def checkExtension(self, filename):
+    def check_extension(self, filename):
         ext = os.path.splitext(filename)[-1].lower()
 
         if ext != ".ksql":

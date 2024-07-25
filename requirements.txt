@@ -1,4 +1,3 @@
 requests
 six
-urllib3
-hyper
+httpx[http2]
