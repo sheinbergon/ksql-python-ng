@@ -1,4 +1,4 @@
-ksqldb-python-ng
+ksql-python-ng
 ================
 
 Forked and modernized from Bryan Yang's awsome `ksql-python <https://github.com/bryanyang0528/ksql-python>`_
@@ -30,7 +30,7 @@ Installation
 
 .. code:: bash
 
-    pip install git+https://github.com/sheinbergon/ksql-python-ng.git
+    pipx install git+https://github.com/sheinbergon/ksql-python-ng.git --include-deps
 
 Getting Started
 ---------------
