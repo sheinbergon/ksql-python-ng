@@ -91,7 +91,8 @@ class BaseAPI(object):
                             yield chunk.decode(encoding)
 
                 else:
-                    raise ValueError(f"HTTP error encountered: {response.status_code}: {response.read()}")
+                    body = response.read().decode('utf-8')
+                    raise ValueError(f"HTTP error encountered: {response.status_code}: {body}")
 
     def http1_stream(
         self,
@@ -113,7 +114,8 @@ class BaseAPI(object):
                     if chunk != b"\n":
                         yield chunk.decode(encoding)
             else:
-                raise ValueError(f"HTTP error encountered: {response.status_code}: {response.read()}")
+                body = response.read().decode('utf-8')
+                raise ValueError(f"HTTP error encountered: {response.status_code}: {body}")
 
     def get_request(self, endpoint):
         auth = (self.api_key, self.secret) if self.api_key or self.secret else None
