@@ -39,7 +39,7 @@ class BaseAPI(object):
                 sql_string = sql_string + ";"
         else:
             raise InvalidQueryError(sql_string)
-        return sql_string
+        return sql_string.strip()
 
     @staticmethod
     def _raise_for_status(response: Response, text: str):
@@ -84,14 +84,14 @@ class BaseAPI(object):
         sql_string = self._validate_sql_string(query_string)
         body = {"sql": sql_string, "properties": stream_properties or {}}
         with httpx.Client(http2=True, http1=False) as client:
-            with self._http2_stream(endpoint="query-stream", body=body, client=client) as response_stream:
-                if response_stream.status_code == 200:
-                    for chunk in response_stream.iter_bytes():
+            with self._http2_stream(endpoint="query-stream", body=body, client=client) as response:
+                if response.status_code == 200:
+                    for chunk in response.iter_bytes():
                         if chunk != b"\n":
                             yield chunk.decode(encoding)
 
                 else:
-                    raise ValueError("Return code is {}.".format(response_stream.status_code))
+                    raise ValueError(f"HTTP error encountered: {response.status_code}: {response.read()}")
 
     def http1_stream(
         self,
@@ -107,13 +107,13 @@ class BaseAPI(object):
             endpoint="query",
             sql_string=query_string,
             stream_properties=stream_properties,
-        ) as response_stream:
-            if response_stream.status_code == 200:
-                for chunk in response_stream.iter_bytes():
+        ) as response:
+            if response.status_code == 200:
+                for chunk in response.iter_bytes():
                     if chunk != b"\n":
                         yield chunk.decode(encoding)
             else:
-                raise ValueError("Return code is {}.".format(response_stream.status_code))
+                raise ValueError(f"HTTP error encountered: {response.status_code}: {response.read()}")
 
     def get_request(self, endpoint):
         auth = (self.api_key, self.secret) if self.api_key or self.secret else None
