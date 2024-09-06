@@ -11,8 +11,7 @@ def get_install_requirements(path):
     return [req for req in content.split("\n") if req != "" and not req.startswith("#")]
 
 
-# Get version from __init__.py file
-VERSION = "0.29.1"
+VERSION = "0.29.1.3"
 
 here = os.path.dirname(__file__)
 

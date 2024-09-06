@@ -38,7 +38,6 @@ def get_stream_info(api_client, stream_name):
     return stream_info
 
 
-# We have
 def drop_all_streams(api_client, prefix=None):
     filtered_streams = get_all_streams(api_client, prefix=prefix)
     second_pass = []

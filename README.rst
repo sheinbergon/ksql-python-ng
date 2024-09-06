@@ -5,17 +5,14 @@ Forked from Bryan Yang's awsome `ksql-python <https://github.com/bryanyang0528/k
 
 A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API using this library.
 
-**Supported KSQLDB version:** 0.29.0+  
-
-**Supported Python version:** 3.9+  
+| **Supported KSQLDB version:** 0.29.0+
+| **Supported Python version:** 3.9+
 
 **Roadmap:**
 
 - Move to Poetry/PDM
 - Asyncify the entire codebase
-- Publish PyPI artifact
 - Support newer python versions
-- Support newer KSQLDB versions
 - More Cleanup & Refactoring
 - Benchmarks
 
@@ -27,21 +24,23 @@ A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API u
   :target: https://codecov.io/gh/bryanyang0528/ksql-python
 ..
    image:: https://pepy.tech/badge/ksql
-   :target: https://pepy.tech/project/ksql
+   :target: https://pepy.tech/project/ksql-ng
 ..
    image:: https://pepy.tech/badge/ksql/month
    :target: https://pepy.tech/project/ksql/month
 
+.. image:: https://img.shields.io/pypi/v/ksql-python-ng
+   :alt: PyPI - Version
+
 .. image:: https://img.shields.io/badge/license-MIT-yellow.svg
-  :target: https://github.com/bryanyang0528/ksql-python/blob/master/LICENSE  
+  :target: https://github.com/sheinbergon/ksql-python-ng/blob/main/LICENSE
   
 Installation
 ------------
-(PyPI coming soon)
 
 .. code:: bash
 
-    pipx install git+https://github.com/sheinbergon/ksql-python-ng.git --include-deps
+    pip install ksql-python-ng==0.29.1.3
 
 Getting Started
 ---------------
