@@ -41,7 +41,7 @@ Installation
 
 .. code:: bash
 
-    pip install ksql-python-ng==0.29.1.3
+    pip install ksql-python-ng==0.29.0.1
 
 Getting Started
 ---------------
