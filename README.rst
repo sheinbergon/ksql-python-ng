@@ -30,6 +30,7 @@ A python wrapper for the KSQL REST API. Easily interact with the KSQL REST API u
    :target: https://pepy.tech/project/ksql/month
 
 .. image:: https://img.shields.io/pypi/v/ksql-python-ng
+   :target: https://pypi.org/project/ksql-python-ng/
    :alt: PyPI - Version
 
 .. image:: https://img.shields.io/badge/license-MIT-yellow.svg
